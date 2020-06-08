@@ -25,7 +25,7 @@ Here is when `Solution part 0.` comes in. We'll redirect the admin to a page tha
 
 ___
 
-### Escenario now has changed. The admin is on a page that we control.
+### The scenario now has changed. The admin is on a page that we control.
 
 I'll try to explain some technical stuff which are used in the solution.
 
