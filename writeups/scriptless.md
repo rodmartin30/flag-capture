@@ -1,3 +1,7 @@
+# Scriptless
+
+Link to the challenge: https://scriptless.world/
+
 This writeup is based on my understanding of [Terjanq solution](https://gist.github.com/terjanq/cd146e97fac07db1c15e6037af7644e0), I didn't solved the challenge in the competition neither after the competition.
 
 Some **Terjanq** words
