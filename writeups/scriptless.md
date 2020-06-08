@@ -25,7 +25,7 @@ Here is when `Solution part 0.` comes in. We'll redirect the admin to a page tha
 
 ___
 
-### Escenarion now has changed. The admin is on a page that we control.
+### Escenario now has changed. The admin is on a page that we control.
 
 I'll try to explain some technical stuff which are used in the solution.
 
@@ -109,10 +109,12 @@ To summerize, URL will:
 * Inject an input tag with a pattern and a value. The value contains the flag.
 * Inject a script with the JSONP call, which will run reportValidity.
 
-Getting back to the test function, after the step 5, there are to thing that can happen:
+Getting back to the test function, after the step 5, there are two thing that could happen:
 
 * If the current pattern doesn't match. (Note the way the pattern is made), `reportValidity` will return false and iframe `i` will gain focus, so iframe `x` lost focus, which will triger the `onblur` event returning a `1`.
 * If the current pattern does match. It'll be because the current prefix of the flag isn't correct. So the Promise response will be `0`.
+
+Finally everytime the prefix is updated, the `go` function make a fetch to a server of or property to look into the logs for the flag.
 
 
 ## Some resources that I used to understand the solution
