@@ -30,25 +30,25 @@ ___
 I'll try to explain some technical stuff which are used in the solution.
 
 #### reportValidity
-Let assume we have something like this.
+Let's assume we have something like this.
 ```html
-<input id=x value='my-flag' patter='my-f[^b].*'>
+<input id=x value='my-flag' pattern='my-f[^b].*'>
 ```
 The pattern is asking for a prefix `my-f` then any character which is not a `b`, finally, any character. So if we run:
 ```javascript
 ok = document.getElementById('x').reportValidity()
 ```
-The value of *ok* will be `true` since the pattern match.
+The value of *ok* will be `true` since the pattern matches.
 
 Another thing to take in count is, if the pattern doesn't match, the element `x` will gain focus.
 
 #### Dangling markup
 
-[What is injection?](https://portswigger.net/web-security/cross-site-scripting/dangling-markup)
+[What is dangling markup injection?](https://portswigger.net/web-security/cross-site-scripting/dangling-markup)
 
 With this injection we'll capture the flag inside the value of an input tag.
 
-https://scriptless.world/?name=%3Cinput+value=%27 If we inpect the source code of that page. We'll see that a big part of the HTML content is inside of the value attribute. Note that the flag part is inside it.
+https://scriptless.world/?name=%3Cinput+value=%27 If we inspect the source code of that page. We'll see that a big part of the HTML content is inside of the value attribute. Note that the flag part is inside it.
 ___
 
 
@@ -94,27 +94,27 @@ Let see what the `test` functions does:
 1. It will create an iframe, lets call it `x`
 2. It will give focus to this iframe.
 3. It will add a function to the event `onblur` which will end the promise with the value of `1`.
-4. It will create a new iframe, lets call it `i`, inside the iframe `x`.
+4. It will create a new iframe, let's call it `i`, inside the iframe `x`.
 5. It will load the iframe `i` with the `URL` variable.
 
 **Lets stop a moment here**
 The URL variable is used for multiple purposes
 
 1. URL will load the scriptless.world page. This page will have the flag in the HTML code.
-2. Using the JSONP, URL will make able to run `x.reportValidity()`. Note here that it'll be call with a string as a parameter, but this doesn't matter.
-3. URL will inject a HTML tag. `<input id=x patter='a pattern here' value='`. Note that the tag isn't close and also `value` attribute has only one single quote. Here is when [dangling markup](https://portswigger.net/web-security/cross-site-scripting/dangling-markup) comes in to the game.
+2. Using the JSONP, URL will make it able to run `x.reportValidity()`. Note here that it'll be call with a string as a parameter, but this doesn't matter.
+3. URL will inject a HTML tag. `<input id=x pattern='a pattern here' value='`. Note that the tag isn't close and also the `value` attribute has only one single quote. Here is when [dangling markup](https://portswigger.net/web-security/cross-site-scripting/dangling-markup) comes into the game.
 4. Because of the dangling markup. The value of the input `x` will have a lot of trash, the flag and finally more trash. (That's why URL has a long pattern, it's to match the trash before the flag)
 
-To summerize, URL will:
+To summarize, URL will:
 * Inject an input tag with a pattern and a value. The value contains the flag.
 * Inject a script with the JSONP call, which will run reportValidity.
 
 Getting back to the test function, after the step 5, there are two thing that could happen:
 
-* If the current pattern doesn't match. (Note the way the pattern is made), `reportValidity` will return false and iframe `i` will gain focus, so iframe `x` lost focus, which will triger the `onblur` event returning a `1`.
+* If the current pattern doesn't match. (Note the way the pattern is made), `reportValidity` will return false and iframe `i` will gain focus, so iframe `x` loses focus, which will trigger the `onblur` event returning a `1`.
 * If the current pattern does match. It'll be because the current prefix of the flag isn't correct. So the Promise response will be `0`.
 
-Finally everytime the prefix is updated, the `go` function make a fetch to a server of or property to look into the logs for the flag.
+Finally everytime the prefix is updated, the `go` function makes a fetch to a server of our property to look into the logs for the flag.
 
 
 ## Some resources that I used to understand the solution
